@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>Blazor Extensions Storage</Title>
+    <Description>Microsoft Extension Storage implementation for ASP.NET Core Blazor.</Description>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <OutputType>library</OutputType>
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);IncludeP2POutput</TargetsForTfmSpecificBuildOutput>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Blazor.Extensions.Storage.JS\Blazor.Extensions.Storage.JS.csproj" PrivateAssets="All" />
+  </ItemGroup>
+
+  <Target Name="IncludeP2POutput">
+    <ItemGroup>
+      <BuildOutputInPackage Include="$(OutputPath)Blazor.Extensions.Storage.JS.dll" />
+    </ItemGroup>
+  </Target>
+</Project>

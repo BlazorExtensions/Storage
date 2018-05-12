@@ -1,0 +1,42 @@
+@page "/"
+@inject SessionStorage SessionStorage
+@inject LocalStorage LocalStorage
+@inject HttpClient Http
+@inject ILogger<Index> logger
+
+<h1>Session and Local Storage Test, Open up your browser devtools to see the logs!</h1>
+
+@functions {
+    WeatherForecast[] forecasts;
+
+    protected override async Task OnInitAsync()
+    {
+        forecasts = await Http.GetJsonAsync<WeatherForecast[]>("/weather.json");
+        var key = "forecasts";
+        SessionStorage.SetItem<WeatherForecast[]>(key, forecasts);
+        LocalStorage.SetItem<WeatherForecast[]>(key, forecasts);
+        var fromSession = SessionStorage.GetItem<WeatherForecast[]>(key);
+        var fromLocal = LocalStorage.GetItem<WeatherForecast[]>(key);
+
+        logger.LogInformation("From session storage:");
+        logger.LogInformation(fromSession);
+        logger.LogInformation("From local storage:");
+        logger.LogInformation(fromLocal);
+        logger.LogInformation($"Total in session: {SessionStorage.Length}");
+        logger.LogInformation($"Total in local: {SessionStorage.Length}");
+        logger.LogInformation("Removing from session storage...");
+        SessionStorage.RemoveItem(key);
+        logger.LogInformation("Removing from local storage...");
+        LocalStorage.RemoveItem(key);
+        logger.LogInformation($"Total in session: {SessionStorage.Length}");
+        logger.LogInformation($"Total in local: {SessionStorage.Length}");
+    }
+
+    class WeatherForecast
+    {
+        public DateTime Date { get; set; }
+        public int TemperatureC { get; set; }
+        public int TemperatureF { get; set; }
+        public string Summary { get; set; }
+    }
+}
