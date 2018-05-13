@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Title>Blazor Extensions Storage</Title>
-    <Description>Microsoft Extension Storage implementation for ASP.NET Core Blazor.</Description>
+    <Description>HTML5 Storage API implementation for ASP.NET Core Blazor.</Description>
   </PropertyGroup>
 
   <PropertyGroup>
