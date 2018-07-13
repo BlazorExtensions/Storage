@@ -15,6 +15,7 @@
         var key = "forecasts";
         SessionStorage.SetItem<WeatherForecast[]>(key, forecasts);
         LocalStorage.SetItem<WeatherForecast[]>(key, forecasts);
+
         var fromSession = SessionStorage.GetItem<WeatherForecast[]>(key);
         var fromLocal = LocalStorage.GetItem<WeatherForecast[]>(key);
 
@@ -22,12 +23,15 @@
         logger.LogInformation(fromSession);
         logger.LogInformation("From local storage:");
         logger.LogInformation(fromLocal);
+
         logger.LogInformation($"Total in session: {SessionStorage.Length}");
-        logger.LogInformation($"Total in local: {SessionStorage.Length}");
+        logger.LogInformation($"Total in local: {LocalStorage.Length}");
+
         logger.LogInformation("Removing from session storage...");
         SessionStorage.RemoveItem(key);
         logger.LogInformation("Removing from local storage...");
         LocalStorage.RemoveItem(key);
+
         logger.LogInformation($"Total in session: {SessionStorage.Length}");
         logger.LogInformation($"Total in local: {SessionStorage.Length}");
     }

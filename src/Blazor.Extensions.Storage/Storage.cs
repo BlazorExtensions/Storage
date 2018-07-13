@@ -35,6 +35,7 @@ namespace Blazor.Extensions
 
     public class LocalStorage
     {
+        public int Length => RegisteredFunction.Invoke<int>(MethodNames.LENGTH_METHOD, StorageTypeNames.LOCAL_STORAGE);
         public void Clear() => RegisteredFunction.InvokeUnmarshalled<object>(MethodNames.CLEAR_METHOD, StorageTypeNames.LOCAL_STORAGE);
 
         public TItem GetItem<TItem>(string key)
