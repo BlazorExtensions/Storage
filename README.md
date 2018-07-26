@@ -1,4 +1,4 @@
-<!---[![Build status](https://img.shields.io/circleci/project/github/BlazorExtensions/Storage.svg)](https://ci.dot.net/job/dotnet_orleans/job/master/)-->
+[![Build status](https://dotnet-ci.visualstudio.com/DotnetCI/_apis/build/status/Blazor-Extensions-Storage-CI?branch=master)](https://dotnet-ci.visualstudio.com/DotnetCI/_build/latest?definitionId=12&branch=master)
 [![Package Version](https://img.shields.io/nuget/v/Blazor.Extensions.Storage.svg)](https://www.nuget.org/packages/Blazor.Extensions.Storage)
 [![NuGet Downloads](https://img.shields.io/nuget/dt/Blazor.Extensions.Storage.svg)](https://www.nuget.org/packages/Blazor.Extensions.Storage)
 [![License](https://img.shields.io/github/license/BlazorExtensions/Storage.svg)](https://github.com/BlazorExtensions/Storage/blob/master/LICENSE)

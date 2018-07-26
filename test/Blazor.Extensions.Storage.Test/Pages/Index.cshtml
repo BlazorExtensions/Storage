@@ -11,29 +11,36 @@
 
     protected override async Task OnInitAsync()
     {
-        forecasts = await Http.GetJsonAsync<WeatherForecast[]>("/weather.json");
+        forecasts = (await Http.GetJsonAsync<WeatherForecast[]>("/weather.json"));
         var key = "forecasts";
-        SessionStorage.SetItem<WeatherForecast[]>(key, forecasts);
-        LocalStorage.SetItem<WeatherForecast[]>(key, forecasts);
+        try
+        {
+            await SessionStorage.SetItem<WeatherForecast[]>(key, forecasts);
+            await LocalStorage.SetItem<WeatherForecast[]>(key, forecasts);
+            var fromSession = await SessionStorage.GetItem<WeatherForecast[]>(key);
+            var fromLocal = await LocalStorage.GetItem<WeatherForecast[]>(key);
 
-        var fromSession = SessionStorage.GetItem<WeatherForecast[]>(key);
-        var fromLocal = LocalStorage.GetItem<WeatherForecast[]>(key);
+            logger.LogInformation("From session storage:");
+            logger.LogInformation(fromSession);
+            logger.LogInformation("From local storage:");
+            logger.LogInformation(fromLocal);
 
-        logger.LogInformation("From session storage:");
-        logger.LogInformation(fromSession);
-        logger.LogInformation("From local storage:");
-        logger.LogInformation(fromLocal);
+            logger.LogInformation($"Total in session: {await SessionStorage.Length()}");
+            logger.LogInformation($"Total in local: {await LocalStorage.Length()}");
 
-        logger.LogInformation($"Total in session: {SessionStorage.Length}");
-        logger.LogInformation($"Total in local: {LocalStorage.Length}");
+            logger.LogInformation("Removing from session storage...");
+            await SessionStorage.RemoveItem(key);
+            logger.LogInformation("Removing from local storage...");
+            await LocalStorage.RemoveItem(key);
 
-        logger.LogInformation("Removing from session storage...");
-        SessionStorage.RemoveItem(key);
-        logger.LogInformation("Removing from local storage...");
-        LocalStorage.RemoveItem(key);
+            logger.LogInformation($"Total in session: {await SessionStorage.Length()}");
+            logger.LogInformation($"Total in local: {await SessionStorage.Length()}");
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex);
 
-        logger.LogInformation($"Total in session: {SessionStorage.Length}");
-        logger.LogInformation($"Total in local: {SessionStorage.Length}");
+        }
     }
 
     class WeatherForecast

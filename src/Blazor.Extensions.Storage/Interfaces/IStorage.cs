@@ -1,16 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace Blazor.Extensions.Storage.Interfaces
 {
     public interface IStorage
     {
-        TItem GetItem<TItem>(string key);
-        string Key(int index);
-        void RemoveItem(string key);
-        void SetItem<TItem>(string key, TItem item);
-        void Clear();
-        int Length { get; }
+        Task<TItem> GetItem<TItem>(string key);
+        Task<string> Key(int index);
+        Task RemoveItem(string key);
+        Task SetItem<TItem>(string key, TItem item);
+        Task Clear();
+        Task<int> Length();
     }
 }

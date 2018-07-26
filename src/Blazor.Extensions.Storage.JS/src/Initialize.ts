@@ -1,50 +1,63 @@
-import './GlobalExports';
-// Declare types here until we've Blazor.d.ts
-export interface System_Object { System_Object__DO_NOT_IMPLEMENT: any };
-export interface System_String extends System_Object { System_String__DO_NOT_IMPLEMENT: any }
+const blazorExtensions = 'BlazorExtensions';
 
-interface Platform {
-  toJavaScriptString(dotNetString: System_String): string;
-}
-
-type BlazorType = {
-  registerFunction(identifier: string, implementation: Function),
-  platform: Platform
+interface IBrowserStorage {
+  Length(storage: string): number;
+  Key(storage: string, index: number): any;
+  GetItem(storage: string, key: string): any;
+  SetItem(storage: string, key: string, keyValue: string): void;
+  RemoveItem(storage: string, key: string): void;
+  Clear(storage: string): void;
 };
 
-const Blazor: BlazorType = window["Blazor"];
+class BrowserStorage implements IBrowserStorage {
+  public Length(storage: string): number {
+    return window[storage].length;
+  };
+
+  public Key(storage: string, index: number): any {
+    return window[storage].key(index);
+  };
+
+  public GetItem(storage: string, key: string): any {
+    let item = window[storage].getItem(key);
+    if (item) {
+      // HACK: While we wait for https://github.com/aspnet/Blazor/issues/1205 to be fixed we just send back a string and deserialize it in C# land
+      return item;
+      //return JSON.parse(item);
+    }
+
+    return null;
+  };
+
+  public SetItem(storage: string, key: string, keyValue: string): void {
+    window[storage].setItem(key, keyValue);
+  };
+
+  public RemoveItem(storage: string, key: string): void {
+    window[storage].removeItem(key);
+  };
+
+  Clear(storage: string): void {
+    window[storage].clear();
+  };
+};
+
 
 function initialize() {
   "use strict";
 
-  Blazor.registerFunction('Blazor.Extensions.Storage.Length', (storage: string) => {
-    return window[storage].length;
-  });
-
-  Blazor.registerFunction('Blazor.Extensions.Storage.Key', (storage: string, index: number) => {
-    return window[storage].key(index);
-  });
-
-  Blazor.registerFunction('Blazor.Extensions.Storage.GetItem', (storage: string, key: string) => {
-    let item = window[storage].getItem(key);
-    if (item)
-    {
-      return JSON.parse(item);
-    }
-    return null;
-  });
-
-  Blazor.registerFunction('Blazor.Extensions.Storage.SetItem', (storage: string, key: string, keyValue: string) => {
-    window[storage].setItem(key, keyValue);
-  });
-
-  Blazor.registerFunction('Blazor.Extensions.Storage.RemoveItem', (storage: System_String, key: System_String) => {
-    window[Blazor.platform.toJavaScriptString(storage)].removeItem(Blazor.platform.toJavaScriptString(key));
-  });
-
-  Blazor.registerFunction('Blazor.Extensions.Storage.Clear', (storage: System_String) => {
-    window[Blazor.platform.toJavaScriptString(storage)].clear();
-  });
+  if (typeof window !== 'undefined' && !window[blazorExtensions]) {
+    // When the library is loaded in a browser via a <script> element, make the
+    // following APIs available in global scope for invocation from JS
+    window[blazorExtensions] = {
+      Storage: new BrowserStorage()
+    };
+  } else {
+    window[blazorExtensions] = {
+      ...window[blazorExtensions],
+      Storage: new BrowserStorage()
+    };
+  }
 }
 
 initialize();

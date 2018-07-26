@@ -1,36 +1,39 @@
 using Blazor.Extensions.Storage.Interfaces;
-using Microsoft.AspNetCore.Blazor;
-using Microsoft.AspNetCore.Blazor.Browser.Interop;
+using Microsoft.JSInterop;
 using System;
+using System.Threading.Tasks;
 
 namespace Blazor.Extensions.Storage
 {
     public class SessionStorage : IStorage
     {
-        public int Length => RegisteredFunction.Invoke<int>(MethodNames.LENGTH_METHOD, StorageTypeNames.SESSION_STORAGE);
-        public void Clear() => RegisteredFunction.InvokeUnmarshalled<object>(MethodNames.CLEAR_METHOD, StorageTypeNames.SESSION_STORAGE);
+        public Task<int> Length() => JSRuntime.Current.InvokeAsync<int>(MethodNames.LENGTH_METHOD, StorageTypeNames.SESSION_STORAGE);
+        public Task Clear() => JSRuntime.Current.InvokeAsync<object>(MethodNames.CLEAR_METHOD, StorageTypeNames.SESSION_STORAGE);
 
-        public TItem GetItem<TItem>(string key)
+        public async Task<TItem> GetItem<TItem>(string key)
         {
             if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key));
 
-            return RegisteredFunction.Invoke<TItem>(MethodNames.GET_ITEM_METHOD, StorageTypeNames.SESSION_STORAGE, key);
+            // HACK: While we wait for https://github.com/aspnet/Blazor/issues/1205 to be fixed we just get back a string and deserialize it in C# land 
+            var json = await JSRuntime.Current.InvokeAsync<object>(MethodNames.GET_ITEM_METHOD, StorageTypeNames.SESSION_STORAGE, key);
+            
+            return Json.Deserialize<TItem>(json.ToString());
         }
 
-        public string Key(int index) => RegisteredFunction.Invoke<string>(MethodNames.KEY_METHOD, StorageTypeNames.SESSION_STORAGE, index);
+        public Task<string> Key(int index) => JSRuntime.Current.InvokeAsync<string>(MethodNames.KEY_METHOD, StorageTypeNames.SESSION_STORAGE, index);
 
-        public void RemoveItem(string key)
+        public Task RemoveItem(string key)
         {
             if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key));
 
-            RegisteredFunction.InvokeUnmarshalled<object>(MethodNames.REMOVE_ITEM_METHOD, StorageTypeNames.SESSION_STORAGE, key);
+            return JSRuntime.Current.InvokeAsync<object>(MethodNames.REMOVE_ITEM_METHOD, StorageTypeNames.SESSION_STORAGE, key);
         }
 
-        public void SetItem<TItem>(string key, TItem item)
+        public Task SetItem<TItem>(string key, TItem item)
         {
             if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key));
 
-            RegisteredFunction.Invoke<object>(MethodNames.SET_ITEM_METHOD, StorageTypeNames.SESSION_STORAGE, key, JsonUtil.Serialize(item));
+            return JSRuntime.Current.InvokeAsync<object>(MethodNames.SET_ITEM_METHOD, StorageTypeNames.SESSION_STORAGE, key, Json.Serialize(item));
         }
     }
 }

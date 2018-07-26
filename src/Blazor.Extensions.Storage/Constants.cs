@@ -2,12 +2,12 @@ namespace Blazor.Extensions
 {
     internal class MethodNames
     {
-        public const string LENGTH_METHOD = "Blazor.Extensions.Storage.Length";
-        public const string KEY_METHOD = "Blazor.Extensions.Storage.Key";
-        public const string GET_ITEM_METHOD = "Blazor.Extensions.Storage.GetItem";
-        public const string SET_ITEM_METHOD = "Blazor.Extensions.Storage.SetItem";
-        public const string REMOVE_ITEM_METHOD = "Blazor.Extensions.Storage.RemoveItem";
-        public const string CLEAR_METHOD = "Blazor.Extensions.Storage.Clear";
+        public const string LENGTH_METHOD = "BlazorExtensions.Storage.Length";
+        public const string KEY_METHOD = "BlazorExtensions.Storage.Key";
+        public const string GET_ITEM_METHOD = "BlazorExtensions.Storage.GetItem";
+        public const string SET_ITEM_METHOD = "BlazorExtensions.Storage.SetItem";
+        public const string REMOVE_ITEM_METHOD = "BlazorExtensions.Storage.RemoveItem";
+        public const string CLEAR_METHOD = "BlazorExtensions.Storage.Clear";
     }
 
     internal class StorageTypeNames
