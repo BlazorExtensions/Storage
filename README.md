@@ -15,15 +15,15 @@ This package wraps [HTML5 Storage](https://developer.mozilla.org/en-US/docs/Web/
 
 ## Setup
 
-The following snippet shows how to setup the storage wrapper by registering it for dependency injection in the ```Program.cs``` of the application.
+The following snippet shows how to setup the storage wrapper by registering it for dependency injection in the ```Startup.cs``` of the application.
 
 ```c#
-var serviceProvider = new BrowserServiceProvider(services =>
+public void ConfigureServices(IServiceCollection services)
 {
     // Add Blazor.Extensions.Storage
     // Both SessionStorage and LocalStorage are registered
     services.AddStorage();
-});
+}
 ```
 
 ## Usage
