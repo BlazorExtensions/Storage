@@ -10,14 +10,11 @@ namespace Blazor.Extensions.Storage
         public Task<int> Length() => JSRuntime.Current.InvokeAsync<int>(MethodNames.LENGTH_METHOD, StorageTypeNames.SESSION_STORAGE);
         public Task Clear() => JSRuntime.Current.InvokeAsync<object>(MethodNames.CLEAR_METHOD, StorageTypeNames.SESSION_STORAGE);
 
-        public async Task<TItem> GetItem<TItem>(string key)
+        public Task<TItem> GetItem<TItem>(string key)
         {
             if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key));
 
-            // HACK: While we wait for https://github.com/aspnet/Blazor/issues/1205 to be fixed we just get back a string and deserialize it in C# land 
-            var json = await JSRuntime.Current.InvokeAsync<object>(MethodNames.GET_ITEM_METHOD, StorageTypeNames.SESSION_STORAGE, key);
-            
-            return Json.Deserialize<TItem>(json.ToString());
+            return JSRuntime.Current.InvokeAsync<TItem>(MethodNames.GET_ITEM_METHOD, StorageTypeNames.SESSION_STORAGE, key);
         }
 
         public Task<string> Key(int index) => JSRuntime.Current.InvokeAsync<string>(MethodNames.KEY_METHOD, StorageTypeNames.SESSION_STORAGE, index);

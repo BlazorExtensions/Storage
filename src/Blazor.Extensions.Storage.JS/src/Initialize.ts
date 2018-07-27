@@ -21,11 +21,8 @@ class BrowserStorage implements IBrowserStorage {
   public GetItem(storage: string, key: string): any {
     let item = window[storage].getItem(key);
     if (item) {
-      // HACK: While we wait for https://github.com/aspnet/Blazor/issues/1205 to be fixed we just send back a string and deserialize it in C# land
-      return item;
-      //return JSON.parse(item);
+      return JSON.parse(item);
     }
-
     return null;
   };
 
