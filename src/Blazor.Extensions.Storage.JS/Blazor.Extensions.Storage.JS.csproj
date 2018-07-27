@@ -20,10 +20,6 @@
     <WebpackInputs Include="**\*.ts" Exclude="dist\**;node_modules\**" />
   </ItemGroup>
 
-  <ItemGroup>
-    <WebpackInputs Remove="src\Initialize.ts" />
-  </ItemGroup>
-
   <Target Name="EnsureNpmRestored" Condition="!Exists('node_modules')">
     <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
     <Exec Command="npm install" />
