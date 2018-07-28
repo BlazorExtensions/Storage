@@ -38,10 +38,10 @@ The following snippet shows how to consume the storage API in a Blazor component
   protected override async Task OnInitAsync()
   {
         var key = "forecasts";
-        sessionStorage.SetItem<WeatherForecast[]>(key, forecasts);
-        localStorage.SetItem<WeatherForecast[]>(key, forecasts);
-        var fromSession = sessionStorage.GetItem<WeatherForecast[]>(key);
-        var fromLocal = localStorage.GetItem<WeatherForecast[]>(key);
+        await sessionStorage.SetItem<WeatherForecast[]>(key, forecasts);
+        await localStorage.SetItem<WeatherForecast[]>(key, forecasts);
+        var fromSession = await sessionStorage.GetItem<WeatherForecast[]>(key);
+        var fromLocal = await localStorage.GetItem<WeatherForecast[]>(key);
   }
 }
 ```
@@ -55,13 +55,13 @@ protected SessionStorage sessionStorage;
 [Inject]
 protected LocalStorage localStorage;
 
-public void LogSomething()
+public Task LogSomething()
 {
         var key = "forecasts";
-        sessionStorage.SetItem<WeatherForecast[]>(key, forecasts);
-        localStorage.SetItem<WeatherForecast[]>(key, forecasts);
-        var fromSession = sessionStorage.GetItem<WeatherForecast[]>(key);
-        var fromLocal = localStorage.GetItem<WeatherForecast[]>(key);
+        await sessionStorage.SetItem<WeatherForecast[]>(key, forecasts);
+        await localStorage.SetItem<WeatherForecast[]>(key, forecasts);
+        var fromSession = await sessionStorage.GetItem<WeatherForecast[]>(key);
+        var fromLocal = await localStorage.GetItem<WeatherForecast[]>(key);
 }
 ```
 
