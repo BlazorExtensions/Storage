@@ -1,5 +1,3 @@
-const blazorExtensions = 'BlazorExtensions';
-
 interface IBrowserStorage {
   Length(storage: string): number;
   Key(storage: string, index: number): any;
@@ -9,7 +7,7 @@ interface IBrowserStorage {
   Clear(storage: string): void;
 };
 
-class BrowserStorage implements IBrowserStorage {
+export class BrowserStorage implements IBrowserStorage {
   public Length(storage: string): number {
     return window[storage].length;
   };
@@ -19,10 +17,12 @@ class BrowserStorage implements IBrowserStorage {
   };
 
   public GetItem(storage: string, key: string): any {
-    let item = window[storage].getItem(key);
+    const item = window[storage].getItem(key);
+
     if (item) {
       return JSON.parse(item);
     }
+
     return null;
   };
 
@@ -38,23 +38,3 @@ class BrowserStorage implements IBrowserStorage {
     window[storage].clear();
   };
 };
-
-
-function initialize() {
-  "use strict";
-
-  if (typeof window !== 'undefined' && !window[blazorExtensions]) {
-    // When the library is loaded in a browser via a <script> element, make the
-    // following APIs available in global scope for invocation from JS
-    window[blazorExtensions] = {
-      Storage: new BrowserStorage()
-    };
-  } else {
-    window[blazorExtensions] = {
-      ...window[blazorExtensions],
-      Storage: new BrowserStorage()
-    };
-  }
-}
-
-initialize();
