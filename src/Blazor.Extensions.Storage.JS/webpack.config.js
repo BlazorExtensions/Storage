@@ -16,7 +16,7 @@ module.exports = {
     ]
   },
   entry: {
-    "blazor.extensions.storage": "./src/Initialize.ts"
+    "blazor.extensions.storage": "./src/InitializeStorage.ts"
   },
   output: {
     path: path.join(__dirname, "/dist"),
