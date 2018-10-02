@@ -10,5 +10,16 @@
   <app>Loading...</app>
 
   <script src="_framework/blazor.webassembly.js"></script>
+  <script type="text/javascript">
+
+    function getLocalStorage(key) {
+      return localStorage.getItem(key);
+    }
+
+    function getSessionStorage(key) {
+      return sessionStorage.getItem(key);
+    }
+
+  </script>
 </body>
 </html>
