@@ -26,8 +26,8 @@ export class BrowserStorage implements IBrowserStorage {
     return null;
   };
 
-  public SetItem(storage: string, key: string, keyValue: string): void {
-    window[storage].setItem(key, keyValue);
+  public SetItem(storage: string, key: string, keyValue: any): void {
+    window[storage].setItem(key, JSON.stringify(keyValue));
   };
 
   public RemoveItem(storage: string, key: string): void {

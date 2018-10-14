@@ -30,7 +30,7 @@ namespace Blazor.Extensions.Storage
         {
             if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key));
 
-            return JSRuntime.Current.InvokeAsync<object>(MethodNames.SET_ITEM_METHOD, StorageTypeNames.SESSION_STORAGE, key, Json.Serialize(item));
+            return JSRuntime.Current.InvokeAsync<TItem>(MethodNames.SET_ITEM_METHOD, StorageTypeNames.SESSION_STORAGE, key, item);
         }
     }
 }
