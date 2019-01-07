@@ -65,4 +65,12 @@
       </PropertyGroup>
     </Otherwise>
   </Choose>
+
+  <!-- Include preview Blazor bits -->
+  <PropertyGroup>
+    <RestoreAdditionalProjectSources>
+      https://dotnet.myget.org/f/blazor-dev/api/v3/index.json;
+      https://www.myget.org/F/blazor-experiments/api/v3/index.json;
+    </RestoreAdditionalProjectSources>
+  </PropertyGroup>
 </Project>
