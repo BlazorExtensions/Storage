@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.7.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Build" Version="3.0.0-preview3-19153-02" />
     <WebpackInputs Include="**\*.ts" Exclude="dist\**;node_modules\**" />
   </ItemGroup>
 

@@ -1,7 +1,5 @@
-using Blazor.Extensions.Logging;
-using Microsoft.AspNetCore.Blazor.Builder;
+using Microsoft.AspNetCore.Components.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace Blazor.Extensions.Storage.Test
 {
@@ -11,14 +9,9 @@ namespace Blazor.Extensions.Storage.Test
         {
             //Add Blazor.Extensions.Storage
             services.AddStorage();
-
-            services.AddLogging(builder => builder
-                .AddBrowserConsole()
-                .SetMinimumLevel(LogLevel.Trace)
-            );
         }
 
-        public void Configure(IBlazorApplicationBuilder app)
+        public void Configure(IComponentsApplicationBuilder app)
         {
             app.AddComponent<App>("app");
         }
