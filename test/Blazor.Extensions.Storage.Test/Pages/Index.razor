@@ -1,0 +1,87 @@
+@page "/"
+@inject SessionStorage SessionStorage
+@inject LocalStorage LocalStorage
+@inject HttpClient Http
+@inject InteropStorage  InteropStorage
+@inject IJSRuntime JSRuntime
+@using Blazor.Extensions.Storage.Test.Interop
+
+<h1>Test logging output:  (See debugger log for full output)</h1>
+
+<div>
+    @foreach (var message in log)
+    {
+        <div>@message</div>
+    }
+</div>
+
+@functions {
+    private WeatherForecast[] forecasts;
+
+    private List<string> log = new List<string>();
+
+    private async void LogInformation(object message)
+    {
+        log.Add(message.ToString());
+        var _ = await JSRuntime.InvokeAsync<object>("console.info", message);
+    }
+
+    private async void LogError(object message)
+    {
+        log.Add($"ERROR: {message.ToString()}");
+        var _ = await JSRuntime.InvokeAsync<object>("console.error", message);
+    }
+
+    protected override async Task OnInitAsync()
+    {
+        forecasts = (await Http.GetJsonAsync<WeatherForecast[]>("weather.json"));
+        var key = "forecasts";
+        try
+        {
+            await SessionStorage.SetItem<WeatherForecast[]>(key, forecasts);
+            await LocalStorage.SetItem<WeatherForecast[]>(key, forecasts);
+
+            var fromIopSession = await InteropStorage.GetSessionStorage(key);
+            var fromIopLocal = await InteropStorage.GetLocalStorage(key);
+
+            var iopSessionHasQuotes = fromIopSession.StartsWith("\"") || fromIopSession.EndsWith("\"");
+            var iopLocalHasQuotes = fromIopLocal.StartsWith("\"") || fromIopLocal.EndsWith("\"");
+
+            LogInformation($"Interop get from session storage contains extra quotes: {iopSessionHasQuotes}");
+            LogInformation(fromIopSession);
+            LogInformation($"Interop get from local storage contains extra quotes: {iopLocalHasQuotes}");
+            LogInformation(fromIopLocal);
+
+            var fromSession = await SessionStorage.GetItem<WeatherForecast[]>(key);
+            var fromLocal = await LocalStorage.GetItem<WeatherForecast[]>(key);
+
+            LogInformation("From session storage:");
+            LogInformation(fromSession);
+            LogInformation("From local storage:");
+            LogInformation(fromLocal);
+
+            LogInformation($"Total in session: {await SessionStorage.Length()}");
+            LogInformation($"Total in local: {await LocalStorage.Length()}");
+
+            LogInformation("Removing from session storage...");
+            await SessionStorage.RemoveItem(key);
+            LogInformation("Removing from local storage...");
+            await LocalStorage.RemoveItem(key);
+
+            LogInformation($"Total in session: {await SessionStorage.Length()}");
+            LogInformation($"Total in local: {await SessionStorage.Length()}");
+        }
+        catch (Exception ex)
+        {
+            LogError(ex);
+        }
+    }
+
+    class WeatherForecast
+    {
+        public DateTime Date { get; set; }
+        public int TemperatureC { get; set; }
+        public int TemperatureF { get; set; }
+        public string Summary { get; set; }
+    }
+}
