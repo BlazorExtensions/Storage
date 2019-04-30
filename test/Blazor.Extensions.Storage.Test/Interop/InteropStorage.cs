@@ -8,6 +8,13 @@ namespace Blazor.Extensions.Storage.Test.Interop
     /// </summary>
     public class InteropStorage
     {
+        private readonly IJSRuntime runtime;
+
+        public InteropStorage(IJSRuntime runtime)
+        {
+            this.runtime = runtime;
+        }
+
         /// <summary>
         /// Returns a session storage value.
         /// </summary>
@@ -15,7 +22,7 @@ namespace Blazor.Extensions.Storage.Test.Interop
         /// <returns>Task that returns the stored value as a string.</returns>
         public async Task<string> GetSessionStorage(string key)
         {
-            return await JSRuntime.Current.InvokeAsync<string>(
+            return await this.runtime.InvokeAsync<string>(
                 "getSessionStorage",
                 key
             );
@@ -28,7 +35,7 @@ namespace Blazor.Extensions.Storage.Test.Interop
         /// <returns>Task that returns the stored value as a string.</returns>
         public async Task<string> GetLocalStorage(string key)
         {
-            return await JSRuntime.Current.InvokeAsync<string>(
+            return await this.runtime.InvokeAsync<string>(
                 "getLocalStorage",
                 key
             );
