@@ -6,8 +6,8 @@ namespace Blazor.Extensions.Storage
     {
         public static IServiceCollection AddStorage(this IServiceCollection services)
         {
-            return services.AddSingleton<SessionStorage>()
-                .AddSingleton<LocalStorage>();
+            return services.AddScoped<SessionStorage>()
+                .AddScoped<LocalStorage>();
         }
     }
 }
