@@ -32,7 +32,7 @@
         var _ = await JSRuntime.InvokeAsync<object>("console.error", message);
     }
 
-    protected override async Task OnInitAsync()
+    protected override async Task OnInitializedAsync()
     {
         forecasts = (await Http.GetJsonAsync<WeatherForecast[]>("weather.json"));
         var key = "forecasts";
