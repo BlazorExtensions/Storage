@@ -20,7 +20,7 @@ namespace Blazor.Extensions.Storage.Test.Interop
         /// </summary>
         /// <param name="key">Key associated with stroed value.</param>
         /// <returns>Task that returns the stored value as a string.</returns>
-        public async Task<string> GetSessionStorage(string key)
+        public async ValueTask<string> GetSessionStorage(string key)
         {
             return await this.runtime.InvokeAsync<string>(
                 "getSessionStorage",
@@ -33,7 +33,7 @@ namespace Blazor.Extensions.Storage.Test.Interop
         /// </summary>
         /// <param name="key">Key associated with stroed value.</param>
         /// <returns>Task that returns the stored value as a string.</returns>
-        public async Task<string> GetLocalStorage(string key)
+        public async ValueTask<string> GetLocalStorage(string key)
         {
             return await this.runtime.InvokeAsync<string>(
                 "getLocalStorage",
