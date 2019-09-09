@@ -9,36 +9,36 @@ namespace Blazor.Extensions.Storage
     {
         private readonly IJSRuntime runtime;
 
-        public Task<int> Length() => this.runtime.InvokeAsync<int>(MethodNames.LENGTH_METHOD, StorageTypeNames.SESSION_STORAGE);
+        public ValueTask<int> Length() => this.runtime.InvokeAsync<int>(MethodNames.LENGTH_METHOD, StorageTypeNames.SESSION_STORAGE);
 
-        public Task Clear() => this.runtime.InvokeAsync<object>(MethodNames.CLEAR_METHOD, StorageTypeNames.SESSION_STORAGE);
+        public ValueTask Clear() => this.runtime.InvokeVoidAsync(MethodNames.CLEAR_METHOD, StorageTypeNames.SESSION_STORAGE);
 
         public SessionStorage(IJSRuntime runtime)
         {
             this.runtime = runtime;
         }
 
-        public Task<TItem> GetItem<TItem>(string key)
+        public ValueTask<TItem> GetItem<TItem>(string key)
         {
             if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key));
 
             return this.runtime.InvokeAsync<TItem>(MethodNames.GET_ITEM_METHOD, StorageTypeNames.SESSION_STORAGE, key);
         }
 
-        public Task<string> Key(int index) => this.runtime.InvokeAsync<string>(MethodNames.KEY_METHOD, StorageTypeNames.SESSION_STORAGE, index);
+        public ValueTask<string> Key(int index) => this.runtime.InvokeAsync<string>(MethodNames.KEY_METHOD, StorageTypeNames.SESSION_STORAGE, index);
 
-        public Task RemoveItem(string key)
+        public ValueTask RemoveItem(string key)
         {
             if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key));
 
-            return this.runtime.InvokeAsync<object>(MethodNames.REMOVE_ITEM_METHOD, StorageTypeNames.SESSION_STORAGE, key);
+            return this.runtime.InvokeVoidAsync(MethodNames.REMOVE_ITEM_METHOD, StorageTypeNames.SESSION_STORAGE, key);
         }
 
-        public Task SetItem<TItem>(string key, TItem item)
+        public ValueTask SetItem<TItem>(string key, TItem item)
         {
             if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key));
 
-            return this.runtime.InvokeAsync<TItem>(MethodNames.SET_ITEM_METHOD, StorageTypeNames.SESSION_STORAGE, key, item);
+            return this.runtime.InvokeVoidAsync(MethodNames.SET_ITEM_METHOD, StorageTypeNames.SESSION_STORAGE, key, item);
         }
     }
 }

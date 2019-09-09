@@ -4,11 +4,11 @@ namespace Blazor.Extensions.Storage.Interfaces
 {
     public interface IStorage
     {
-        Task<TItem> GetItem<TItem>(string key);
-        Task<string> Key(int index);
-        Task RemoveItem(string key);
-        Task SetItem<TItem>(string key, TItem item);
-        Task Clear();
-        Task<int> Length();
+        ValueTask<TItem> GetItem<TItem>(string key);
+        ValueTask<string> Key(int index);
+        ValueTask RemoveItem(string key);
+        ValueTask SetItem<TItem>(string key, TItem item);
+        ValueTask Clear();
+        ValueTask<int> Length();
     }
 }
