@@ -1,4 +1,5 @@
-queue: 'Hosted VS2017'
+pool:
+  vmImage: 'windows-2019'
 
 variables:
   buildConfiguration: 'Release'
@@ -7,7 +8,7 @@ steps:
   - task: DotNetCoreInstaller@0
     inputs:
       packageType: 'sdk'
-      version: 3.0.100-preview9-014004
+      version: 3.0.100
 
   - task: Npm@1
     displayName: 'Install NPM dependencies'
