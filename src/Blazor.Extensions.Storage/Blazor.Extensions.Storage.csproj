@@ -3,6 +3,8 @@
   <PropertyGroup>
     <Title>Blazor Extensions Storage</Title>
     <Description>HTML 5 Storage API implementation for ASP.NET Core Blazor.</Description>
+    <PackageId>Blazor.Extensions.Storage</PackageId>
+    <PackageVersion>1.1.0-preview1</PackageVersion>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -15,7 +17,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.0-preview1.19508.20" />
   </ItemGroup>
 
   <ItemGroup>
