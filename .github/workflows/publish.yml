@@ -20,7 +20,7 @@ jobs:
       run: dotnet build --configuration Release
     - name: Pack
       working-directory: src/Blazor.Extensions.Storage
-      run: dotnet pack --configuration Release
+      run: dotnet pack --configuration Release -p:Version=${GITHUB_REF##*/v}
     - name: Push
       working-directory: src/Blazor.Extensions.Storage/bin/Release
       run: |
