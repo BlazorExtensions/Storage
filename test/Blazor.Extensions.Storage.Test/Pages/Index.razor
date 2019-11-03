@@ -38,8 +38,8 @@
         var key = "forecasts";
         try
         {
-            await SessionStorage.SetItem<WeatherForecast[]>(key, forecasts);
-            await LocalStorage.SetItem<WeatherForecast[]>(key, forecasts);
+            await SessionStorage.SetItemAsync<WeatherForecast[]>(key, forecasts);
+            await LocalStorage.SetItemAsync<WeatherForecast[]>(key, forecasts);
 
             var fromIopSession = await InteropStorage.GetSessionStorage(key);
             var fromIopLocal = await InteropStorage.GetLocalStorage(key);
@@ -52,24 +52,24 @@
             LogInformation($"Interop get from local storage contains extra quotes: {iopLocalHasQuotes}");
             LogInformation(fromIopLocal);
 
-            var fromSession = await SessionStorage.GetItem<WeatherForecast[]>(key);
-            var fromLocal = await LocalStorage.GetItem<WeatherForecast[]>(key);
+            var fromSession = await SessionStorage.GetItemAsync<WeatherForecast[]>(key);
+            var fromLocal = await LocalStorage.GetItemAsync<WeatherForecast[]>(key);
 
             LogInformation("From session storage:");
             LogInformation(fromSession);
             LogInformation("From local storage:");
             LogInformation(fromLocal);
 
-            LogInformation($"Total in session: {await SessionStorage.Length()}");
-            LogInformation($"Total in local: {await LocalStorage.Length()}");
+            LogInformation($"Total in session: {await SessionStorage.GetLengthAsync()}");
+            LogInformation($"Total in local: {await LocalStorage.GetLengthAsync()}");
 
             LogInformation("Removing from session storage...");
-            await SessionStorage.RemoveItem(key);
+            await SessionStorage.RemoveItemAsync(key);
             LogInformation("Removing from local storage...");
-            await LocalStorage.RemoveItem(key);
+            await LocalStorage.RemoveItemAsync(key);
 
-            LogInformation($"Total in session: {await SessionStorage.Length()}");
-            LogInformation($"Total in local: {await SessionStorage.Length()}");
+            LogInformation($"Total in session: {await SessionStorage.GetLengthAsync()}");
+            LogInformation($"Total in local: {await SessionStorage.GetLengthAsync()}");
         }
         catch (Exception ex)
         {
