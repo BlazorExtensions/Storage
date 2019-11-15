@@ -1,9 +1,10 @@
 @page "/"
-@inject SessionStorage SessionStorage
-@inject LocalStorage LocalStorage
+@inject ISessionStorage SessionStorage
+@inject ILocalStorage LocalStorage
 @inject HttpClient Http
 @inject InteropStorage  InteropStorage
 @inject IJSRuntime JSRuntime
+@using Blazor.Extensions.Storage.Interfaces
 @using Blazor.Extensions.Storage.Test.Interop
 
 <h1>Test logging output:  (See debugger log for full output)</h1>
