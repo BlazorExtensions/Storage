@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Blazor.Extensions.Storage
 {
-    public class SessionStorage : IStorage
+    internal class SessionStorage : ISessionStorage
     {
         private readonly IJSRuntime runtime;
 

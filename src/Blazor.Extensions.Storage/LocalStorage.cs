@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Blazor.Extensions.Storage
 {
-    public class LocalStorage : IStorage
+    internal class LocalStorage : ILocalStorage
     {
         private readonly IJSRuntime runtime;
 
