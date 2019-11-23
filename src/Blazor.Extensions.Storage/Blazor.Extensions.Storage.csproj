@@ -4,7 +4,6 @@
     <Title>Blazor Extensions Storage</Title>
     <Description>HTML 5 Storage API implementation for ASP.NET Core Blazor.</Description>
     <PackageId>Blazor.Extensions.Storage</PackageId>
-    <PackageVersion>1.1.0-preview1</PackageVersion>
   </PropertyGroup>
 
   <PropertyGroup>
