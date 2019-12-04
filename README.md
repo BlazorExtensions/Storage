@@ -21,7 +21,7 @@ The following snippet shows how to setup the storage wrapper by registering it f
 public void ConfigureServices(IServiceCollection services)
 {
     // Add Blazor.Extensions.Storage
-    // Both SessionStorage and LocalStorage are registered
+    // Both ISessionStorage and ILocalStorage are registered
     services.AddStorage();
 }
 ```
@@ -31,8 +31,8 @@ public void ConfigureServices(IServiceCollection services)
 The following snippet shows how to consume the storage API in a Blazor component.
 
 ```c#
-@inject SessionStorage sessionStorage
-@inject LocalStorage localStorage
+@inject ISessionStorage sessionStorage
+@inject ILocalStorage localStorage
 
 @functions {
   protected override async Task OnInitAsync()
@@ -50,10 +50,10 @@ If you want to consume it outside of a ```cshtml``` based component, then you ca
 
 ```c#
 [Inject]
-protected SessionStorage sessionStorage;
+protected ISessionStorage sessionStorage;
 
 [Inject]
-protected LocalStorage localStorage;
+protected ILocalStorage localStorage;
 
 public Task LogSomething()
 {
