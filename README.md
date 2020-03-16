@@ -15,6 +15,12 @@ This package wraps [HTML5 Storage](https://developer.mozilla.org/en-US/docs/Web/
 
 ## Setup
 
+Include the following snippet in the the ```head``` section of the Index page (```wwwroot/index.html```).
+
+```html
+<script src="_content/Blazor.Extensions.Storage/Storage.js"></script>
+```
+
 The following snippet shows how to setup the storage wrapper by registering it for dependency injection in the ```Startup.cs``` of the application.
 
 ```c#
